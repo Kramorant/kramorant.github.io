@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Estudiante de Informática</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>Mi Portafolio</h1>
+            <ul>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#documentacion">Documentación</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Hola, soy un estudiante de informática</h2>
+        <p>Apasionado por el desarrollo web, la programación y la tecnología.</p>
+        <a href="#proyectos" class="btn">Ver proyectos</a>
+    </section>
+
+    <section id="sobre-mi" class="section">
+        <h2>Sobre mí</h2>
+        <p>Soy un estudiante de informática con interés en el desarrollo de software, 
+        la ciberseguridad y la creación de soluciones tecnológicas. Este portafolio 
+        recopila mis proyectos, documentación y aprendizajes.</p>
+    </section>
+
+    <section id="proyectos" class="section">
+        <h2>Proyectos</h2>
+        <div class="grid" id="project-list">
+            <!-- Se llenará con JavaScript -->
+        </div>
+    </section>
+
+    <section id="documentacion" class="section">
+        <h2>Documentación</h2>
+        <ul class="docs-list">
+            <li><a href="#">Guía de instalación de entorno</a></li>
+            <li><a href="#">Apuntes de estructuras de datos</a></li>
+            <li><a href="#">Documentación de API personal</a></li>
+        </ul>
+    </section>
+
+    <section id="contacto" class="section">
+        <h2>Contacto</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="Tu nombre" required>
+            <input type="email" placeholder="Tu correo" required>
+            <textarea placeholder="Tu mensaje" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>© 2025 Estudiante de Informática | Portafolio</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
