@@ -88,3 +88,10 @@ footer {
     color: white;
     margin-top: 40px;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
