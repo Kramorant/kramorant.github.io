@@ -90,8 +90,18 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    text-align: center;
-  }
+    /* Hacemos que el header sea una columna vertical */
+    nav {
+        flex-direction: column;
+    }
+    
+    /* Separamos el menú del título */
+    nav ul {
+        flex-direction: column;
+        margin-top: 15px;
+        gap: 10px; /* Reducimos el espacio entre links en móvil */
+        text-align: center;
+        width: 100%;
+        padding: 0; /* Aseguramos que no haya padding extraño */
+    }
 }
