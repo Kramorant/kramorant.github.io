@@ -105,3 +105,32 @@ footer {
         padding: 0; /* Aseguramos que no haya padding extraño */
     }
 }
+
+/* Estilos para Inputs y Textarea */
+form input, form textarea {
+    width: 100%; /* Ocupan todo el ancho disponible */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit; /* Para que usen la misma fuente que el resto */
+}
+
+form textarea {
+    resize: vertical; /* Permite cambiar alto pero no ancho */
+    min-height: 100px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
