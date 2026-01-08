@@ -78,6 +78,7 @@ darkModeBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     // Cambiamos el icono del botón
     darkModeBtn.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    localStorage.setItem('theme', 'dark')
 });
 
 // 6. Lógica de Idioma
@@ -94,3 +95,4 @@ langSelector.addEventListener('change', (e) => {
     
     // También podrías actualizar el array de proyectos aquí para que cambien sus descripciones
 });
+
