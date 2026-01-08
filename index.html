@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tipografía -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Animaciones AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- HEADER -->
     <header>
-        <h1>Tu Nombre</h1>
+        <div class="logo">TuNombre.dev</div>
         <nav>
             <a href="index.html">Inicio</a>
             <a href="projects.html">Proyectos</a>
@@ -20,33 +25,65 @@
         </nav>
     </header>
 
-    
-
-    
+    <!-- HERO -->
     <section class="hero">
-        <h2>Desarrollador de Software</h2>
-        <p>Bienvenido a mi portafolio. Aquí encontrarás mis proyectos, investigaciones y más.</p>
+        <h1 data-aos="fade-up">Hola, soy <span class="gradient-text">Tu Nombre</span></h1>
+        <p data-aos="fade-up" data-aos-delay="150">
+            Desarrollador de software y estudiante de informática.  
+            Me apasiona crear soluciones modernas, eficientes y visualmente atractivas.
+        </p>
+        <a href="#proyectos" class="btn-primary" data-aos="fade-up" data-aos-delay="300">Ver proyectos</a>
     </section>
 
-    <section class="about">
+    <!-- SOBRE MÍ -->
+    <section class="about" data-aos="fade-up">
         <h2>Sobre mí</h2>
-        <p>Soy estudiante de informática con interés en desarrollo web, IA, ciberseguridad...</p>
+        <p>
+            Soy un estudiante de informática con interés en desarrollo web, inteligencia artificial,
+            ciberseguridad y diseño de interfaces. Me gusta crear proyectos que combinen funcionalidad
+            con una estética moderna.
+        </p>
     </section>
 
-    <section class="featured-projects">
-        <h2>Proyectos Destacados</h2>
+    <!-- PROYECTOS DESTACADOS -->
+    <section class="featured" id="proyectos">
+        <h2 data-aos="fade-up">Proyectos Destacados</h2>
+
         <div class="project-grid">
+
             <div class="project-card" data-aos="fade-up">
                 <h3>Proyecto 1</h3>
                 <p>Descripción breve del proyecto.</p>
+                <div class="tags">
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Web</span>
+                </div>
             </div>
-            <div class="project-card" data-aos="fade-up">
+
+            <div class="project-card" data-aos="fade-up" data-aos-delay="150">
                 <h3>Proyecto 2</h3>
                 <p>Descripción breve del proyecto.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">IA</span>
+                </div>
             </div>
+
         </div>
     </section>
 
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Tu Nombre — Portafolio creado con HTML, CSS y JS</p>
+        <div class="social">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Email</a>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
 </body>
 </html>
