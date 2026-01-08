@@ -43,15 +43,19 @@ nav ul li a {
     padding: 100px 20px;
 }
 
-.btn {
+.btn-small {
     display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: white;
-    color: #007bff;
-    border-radius: 5px;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: #007bff;
+    color: white;
     text-decoration: none;
-    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.btn-small:hover {
+    background: #0056b3;
 }
 
 .section {
