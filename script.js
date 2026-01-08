@@ -55,3 +55,42 @@ if (contactForm) {
 
 // Ejecutar la carga al iniciar
 document.addEventListener('DOMContentLoaded', cargarProyectos);
+
+// 4. Traducciones
+const textos = {
+    es: {
+        hero_h2: "Hola, soy un estudiante de informática",
+        about_h2: "Sobre mí",
+        projects_h2: "Proyectos",
+        contact_h2: "Contacto"
+    },
+    en: {
+        hero_h2: "Hi, I'm a Computer Science student",
+        about_h2: "About me",
+        projects_h2: "Projects",
+        contact_h2: "Contact"
+    }
+};
+
+// 5. Lógica de Modo Oscuro
+const darkModeBtn = document.getElementById('dark-mode-toggle');
+darkModeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    // Cambiamos el icono del botón
+    darkModeBtn.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+
+// 6. Lógica de Idioma
+const langSelector = document.getElementById('language-selector');
+langSelector.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    
+    // Cambiamos textos específicos por ID (necesitarás añadir IDs en tu HTML)
+    // Ejemplo: <h2 id="hero-title">...</h2>
+    document.querySelector('.hero h2').innerText = textos[lang].hero_h2;
+    document.querySelector('#sobre-mi h2').innerText = textos[lang].about_h2;
+    document.querySelector('#proyectos h2').innerText = textos[lang].projects_h2;
+    document.querySelector('#contacto h2').innerText = textos[lang].contact_h2;
+    
+    // También podrías actualizar el array de proyectos aquí para que cambien sus descripciones
+});
