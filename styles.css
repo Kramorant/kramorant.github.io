@@ -173,24 +173,4 @@ header, footer {
     background: var(--header-bg);
 }
 
-/* Este contenedor agrupa el título y los botones */
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Espacio entre "Mi Portafolio" y los botones */
-}
 
-/* Estilizamos un poco los controles para que no se peguen entre sí */
-.controls {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espacio entre la luna y el selector de idioma */
-}
-
-/* Opcional: Ajuste para que el botón de la luna se vea más limpio */
-#dark-mode-toggle {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-}
