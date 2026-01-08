@@ -173,4 +173,45 @@ header, footer {
     background: var(--header-bg);
 }
 
+/* Estilo para el selector de idioma */
+#language-selector {
+    background: #222; /* Un gris muy oscuro para que no desentone con el negro */
+    color: white;
+    border: 1px solid #444;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
 
+#language-selector:hover {
+    border-color: #007bff; /* Un sutil brillo azul al pasar el ratón */
+}
+
+/* Estilo para el botón de modo oscuro */
+#dark-mode-toggle {
+    background: transparent;
+    border: 1px solid #444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+#dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Alineación fina en el contenedor */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio equilibrado entre título y botones */
+}
