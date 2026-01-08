@@ -4,29 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Proyectos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Proyectos e Investigaciones</h1>
-        <nav>
-            <a href="index.html">Inicio</a>
-            <button id="theme-toggle">🌙</button>
-        </nav>
-    </header>
 
-    <section class="projects-list">
-        <h2>Listado de trabajos</h2>
+<header>
+    <div class="logo">TuNombre.dev</div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <button id="theme-toggle">🌙</button>
+    </nav>
+</header>
 
-        <article class="project-item">
-            <h3>Título del proyecto</h3>
-            <p>Descripción detallada del proyecto o investigación.</p>
-            <a href="assets/docs/mi-documento.pdf" target="_blank">Ver documento</a>
+<section class="projects-page">
+    <h1 data-aos="fade-up">Proyectos e Investigaciones</h1>
+
+    <!-- FILTROS -->
+    <div class="filter-container" data-aos="fade-up">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="ia">IA</button>
+        <button class="filter-btn" data-filter="docs">Documentación</button>
+    </div>
+
+    <!-- LISTA DE PROYECTOS -->
+    <div class="project-list">
+
+        <article class="project-item" data-category="web" data-aos="fade-up">
+            <h3>Proyecto Web</h3>
+            <p>Descripción del proyecto web.</p>
+            <a href="#" target="_blank">Ver más</a>
         </article>
 
-    </section>
+        <article class="project-item" data-category="ia" data-aos="fade-up">
+            <h3>Proyecto de IA</h3>
+            <p>Modelo de aprendizaje automático aplicado a...</p>
+            <a href="#" target="_blank">Ver más</a>
+        </article>
 
-    <script src="script.js"></script>
+        <article class="project-item" data-category="docs" data-aos="fade-up">
+            <h3>Investigación</h3>
+            <p>Documento PDF con análisis detallado.</p>
+            <a href="assets/docs/mi-documento.pdf" target="_blank">Abrir PDF</a>
+        </article>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Tu Nombre — Todos los derechos reservados</p>
+</footer>
+
+<script src="script.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
 </body>
 </html>
 
