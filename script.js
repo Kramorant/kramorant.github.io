@@ -1,35 +1,57 @@
-const projects = [
+// 1. Definimos nuestros proyectos como un Array de Objetos
+const proyectos = [
     {
-        title: "Sistema de Gestión",
-        description: "Aplicación CRUD desarrollada con Java y MySQL.",
-        repo: "https://github.com/usuario/proyecto1"
+        titulo: "Sistema de Inventario",
+        descripcion: "Una aplicación en Python para gestionar stock de productos con base de datos SQLite.",
+        link: "https://github.com/Kramorant/inventario",
+        tecnologia: "Python"
     },
     {
-        title: "Página Web Personal",
-        description: "Sitio web estático con HTML, CSS y JS.",
-        repo: "https://github.com/usuario/proyecto2"
+        titulo: "Analizador de Vulnerabilidades",
+        descripcion: "Script que escanea puertos abiertos y detecta versiones de servicios obsoletos.",
+        link: "https://github.com/Kramorant/scanner",
+        tecnologia: "Bash / Ciberseguridad"
     },
     {
-        title: "API REST",
-        description: "API creada con Node.js y Express.",
-        repo: "https://github.com/usuario/proyecto3"
+        titulo: "Web de Documentación",
+        descripcion: "Este mismo portafolio, creado con HTML, CSS y JS puro.",
+        link: "#",
+        tecnologia: "Frontend"
     }
 ];
 
-const projectList = document.getElementById("project-list");
+// 2. Función para renderizar los proyectos en el HTML
+function cargarProyectos() {
+    const contenedor = document.getElementById('project-list');
+    
+    // Limpiamos el contenedor por si acaso
+    contenedor.innerHTML = "";
 
-projects.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
-        <a href="${p.repo}" target="_blank">Ver repositorio</a>
-    `;
-    projectList.appendChild(card);
-});
+    // Recorremos el array y creamos el HTML de cada tarjeta
+    proyectos.forEach(proyecto => {
+        const card = document.createElement('div');
+        card.className = 'card';
 
-document.getElementById("contact-form").addEventListener("submit", e => {
-    e.preventDefault();
-    alert("Mensaje enviado correctamente");
-});
+        card.innerHTML = `
+            <h3>${proyecto.titulo}</h3>
+            <p><strong>${proyecto.tecnologia}</strong></p>
+            <p>${proyecto.descripcion}</p>
+            <a href="${proyecto.link}" target="_blank" class="btn-small">Ver en GitHub</a>
+        `;
+        
+        contenedor.appendChild(card);
+    });
+}
+
+// 3. Manejo del formulario de contacto
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evita que la página se recargue
+        alert('¡Gracias por tu mensaje! (Esta es una simulación, necesitas un backend para recibirlo)');
+        contactForm.reset();
+    });
+}
+
+// Ejecutar la carga al iniciar
+document.addEventListener('DOMContentLoaded', cargarProyectos);
