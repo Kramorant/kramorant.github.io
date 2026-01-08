@@ -1,3 +1,4 @@
+/* MODO OSCURO */
 const toggleBtn = document.getElementById("theme-toggle");
 const currentTheme = localStorage.getItem("theme");
 
@@ -14,4 +15,25 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
 });
 
-AOS.init();
+/* FILTRO DE TAGS EN projects.html */
+const filterButtons = document.querySelectorAll(".filter-btn");
+const projectItems = document.querySelectorAll(".project-item");
+
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector(".filter-btn.active").classList.remove("active");
+        btn.classList.add("active");
+
+        const filter = btn.getAttribute("data-filter");
+
+        projectItems.forEach(item => {
+            const category = item.getAttribute("data-category");
+
+            if (filter === "all" || filter === category) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    });
+});
