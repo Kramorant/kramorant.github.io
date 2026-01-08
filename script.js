@@ -96,3 +96,21 @@ langSelector.addEventListener('change', (e) => {
     // También podrías actualizar el array de proyectos aquí para que cambien sus descripciones
 });
 
+(function() {
+    emailjs.init("TU_USER_ID_DE_EMAILJS");
+})();
+
+const contactForm = document.getElementById('contact-form');
+
+contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Estos IDs los obtienes en tu panel de EmailJS
+    emailjs.sendForm('tu_service_id', 'tu_template_id', this)
+        .then(function() {
+            alert('¡Enviado con éxito!');
+            contactForm.reset();
+        }, function(error) {
+            alert('Error al enviar: ' + JSON.stringify(error));
+        });
+});
