@@ -13,3 +13,5 @@ toggleBtn.addEventListener("click", () => {
     localStorage.setItem("theme", newTheme);
     toggleBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
 });
+
+AOS.init();
