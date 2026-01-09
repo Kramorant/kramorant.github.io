@@ -1,0 +1,7 @@
+# robots.txt for https://kramorant.github.io/
+User-agent: *
+# Allow everything by default
+Disallow:
+
+# Sitemap location
+Sitemap: https://kramorant.github.io/sitemap.xml
