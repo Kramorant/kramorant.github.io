@@ -1,3 +1,3 @@
 # kramorant.github.io
 
-La página aún está en una fase muy temprana, se realizarán una gran cantidad de modificaciones.
+Portafolio web personal — versión temprana. Sitio estático construido con HTML, CSS y JavaScript pensado para mostrar proyectos, contacto y una breve biografía profesional.
