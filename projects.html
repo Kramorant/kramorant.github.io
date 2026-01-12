@@ -3,73 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Proyectos</title>
+    <title>Proyectos | Tu Nombre</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
 </head>
 <body>
 
-<div class="page-transition"></div>
-<div class="cursor-orb"></div>
+    <!-- Transición y cursor -->
+    <div class="page-transition"></div>
+    <div class="cursor-orb"></div>
 
-<header>
-    <div class="logo">TuNombre.dev</div>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <button id="theme-toggle">🌙</button>
-    </nav>
-</header>
+    <header>
+        <div class="logo">TuNombre.dev</div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <button id="theme-toggle">🌙</button>
+        </nav>
+    </header>
 
-<section class="projects-page">
-    <h1 data-aos="fade-up">Proyectos e Investigaciones</h1>
+    <section class="projects-page">
+        <h1 class="glitch" data-text="Proyectos">Proyectos e Investigaciones</h1>
 
-    <!-- FILTROS -->
-    <div class="filter-container" data-aos="fade-up">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="ia">IA</button>
-        <button class="filter-btn" data-filter="docs">Documentación</button>
-    </div>
+        <!-- FILTROS -->
+        <div class="filter-container" data-aos="fade-up" data-aos-duration="1000">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="ia">IA</button>
+            <button class="filter-btn" data-filter="docs">Documentación</button>
+        </div>
 
-    <!-- LISTA DE PROYECTOS -->
-    <div class="project-list">
+        <!-- LISTA DE PROYECTOS -->
+        <div class="project-list">
 
-        <article class="project-item" data-category="web" data-aos="fade-up">
-            <h3>Proyecto Web</h3>
-            <p>Descripción del proyecto web.</p>
-            <a href="#" target="_blank">Ver más</a>
-        </article>
+            <article class="project-item fade-item" data-category="web" data-aos="fade-up">
+                <h3>Frontend Neón</h3>
+                <p>Interfaz web con animaciones y estilo cyberpunk para un panel de control gamer.</p>
+                <div class="tags">
+                    <span class="tag">Web</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">Animaciones</span>
+                </div>
+                <a href="#" target="_blank">Ver demo</a>
+            </article>
 
-        <article class="project-item" data-category="ia" data-aos="fade-up">
-            <h3>Proyecto de IA</h3>
-            <p>Modelo de aprendizaje automático aplicado a...</p>
-            <a href="#" target="_blank">Ver más</a>
-        </article>
+            <article class="project-item fade-item" data-category="ia" data-aos="fade-up">
+                <h3>Clasificador de texto</h3>
+                <p>Modelo de IA que clasifica texto en categorías específicas para análisis de contenido.</p>
+                <div class="tags">
+                    <span class="tag">IA</span>
+                    <span class="tag">Python</span>
+                </div>
+                <a href="#" target="_blank">Ver repositorio</a>
+            </article>
 
-        <article class="project-item" data-category="docs" data-aos="fade-up">
-            <h3>Investigación</h3>
-            <p>Documento PDF con análisis detallado.</p>
-            <a href="assets/docs/mi-documento.pdf" target="_blank">Abrir PDF</a>
-        </article>
+            <article class="project-item fade-item" data-category="docs" data-aos="fade-up">
+                <h3>Informe de investigación</h3>
+                <p>Documento en PDF donde analizo distintas arquitecturas de sistemas distribuidos.</p>
+                <div class="tags">
+                    <span class="tag">Documentación</span>
+                    <span class="tag">Sistemas</span>
+                </div>
+                <a href="assets/docs/mi-documento.pdf" target="_blank">Abrir PDF</a>
+            </article>
 
-    </div>
-</section>
+        </div>
+    </section>
 
-<footer>
-    <p>© 2026 Tu Nombre — Todos los derechos reservados</p>
-</footer>
+    <footer>
+        <p>© 2026 Tu Nombre — Todos los derechos reservados</p>
+    </footer>
 
-<script src="script.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
-
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+    <script src="script.js"></script>
 </body>
 </html>
-
