@@ -423,3 +423,35 @@ footer {
     margin-bottom: 2rem;
     text-align: center;
 }
+
+/* Efecto scanline para títulos */
+.scanline {
+    position: relative;
+    display: inline-block;
+    color: var(--primary);
+    text-shadow: 0 0 12px rgba(127, 0, 255, 0.6);
+}
+
+/* Líneas horizontales */
+.scanline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    animation: scanMove 6s linear infinite;
+    opacity: 0.25;
+}
+
+/* Movimiento vertical suave */
+@keyframes scanMove {
+    0% { transform: translateY(-10%); }
+    100% { transform: translateY(10%); }
+}
