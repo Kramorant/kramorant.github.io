@@ -349,7 +349,9 @@ nav a:hover::after {
     max-width: 900px;
     margin: auto;
     padding: 3rem 2rem 4rem;
+    text-align: center;
 }
+
 
 /* Filtros */
 .filter-container {
