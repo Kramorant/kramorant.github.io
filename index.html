@@ -1,40 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<!-- Script experimental -->    
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Pablo",
-  "url": "https://kramorant.github.io/",
-  "sameAs": [],
-  "jobTitle": "Desarrollador web",
-  "description": "Portafolio de Pablo — proyectos y contacto."
-}
-</script>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portafolio</title>
+    <title>Portafolio | Tu Nombre</title>
 
     <!-- Tipografía -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Animaciones AOS -->
+    <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-    <!-- ALinea experimental -->
-    <title>Kramorant — Portafolio de Pablo</title> <meta name="description" content="Portafolio de Pablo — desarrollador web. Proyectos, habilidades y contacto."> <link rel="canonical" href="https://kramorant.github.io/"> <!-- Open Graph --> <meta property="og:title" content="Kramorant — Portafolio de Pablo"> <meta property="og:description" content="Portafolio de Pablo — desarrollador web. Proyectos, habilidades y contacto."> <meta property="og:type" content="website"> <meta property="og:url" content="https://kramorant.github.io/"> <meta property="og:image" content="https://kramorant.github.io/og-image.png"> <!-- Twitter --> <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="Kramorant — Portafolio de Pablo"> <meta name="twitter:description" content="Portafolio de Pablo — desarrollador web.">
-    
 </head>
 <body>
+
+    <!-- Transición y cursor -->
     <div class="page-transition"></div>
     <div class="cursor-orb"></div>
 
@@ -50,45 +31,64 @@
 
     <!-- HERO -->
     <section class="hero">
-        <h1 data-aos="fade-up">Hola, soy <span class="gradient-text">Tu Nombre</span></h1>
-        <p data-aos="fade-up" data-aos-delay="150">
-            Desarrollador de software y estudiante de informática.  
-            Me apasiona crear soluciones modernas, eficientes y visualmente atractivas.
-        </p>
-        <a href="#proyectos" class="btn-primary" data-aos="fade-up" data-aos-delay="300">Ver proyectos</a>
+        <div class="circuit-lines"></div>
+
+        <div class="hero-content">
+            <h1 class="glitch" data-text="Tu Nombre">Tu Nombre</h1>
+            <h2 class="hero-subtitle gradient-text">
+                Desarrollador de software · Estudiante de informática
+            </h2>
+            <p>
+                Me apasiona construir experiencias digitales con estética <strong>neón</strong>,
+                animaciones fluidas y tecnología moderna.  
+                Bienvenido a mi zona de proyectos, experimentos y exploración técnica.
+            </p>
+            <a href="#proyectos" class="btn-primary">Ver proyectos destacados</a>
+        </div>
     </section>
 
     <!-- SOBRE MÍ -->
-    <section class="about" data-aos="fade-up">
+    <section class="about" data-aos="fade-up" data-aos-duration="1200">
         <h2>Sobre mí</h2>
         <p>
             Soy un estudiante de informática con interés en desarrollo web, inteligencia artificial,
-            ciberseguridad y diseño de interfaces. Me gusta crear proyectos que combinen funcionalidad
-            con una estética moderna.
+            ciberseguridad y diseño de interfaces.  
+            Disfruto creando proyectos que combinan rendimiento, claridad y un toque visual impactante.
         </p>
     </section>
 
     <!-- PROYECTOS DESTACADOS -->
     <section class="featured" id="proyectos">
-        <h2 data-aos="fade-up">Proyectos Destacados</h2>
+        <h2 data-aos="fade-up" data-aos-duration="1200">Proyectos destacados</h2>
 
         <div class="project-grid">
 
-            <div class="project-card" data-aos="fade-up">
-                <h3>Proyecto 1</h3>
-                <p>Descripción breve del proyecto.</p>
+            <div class="project-card tilt" data-aos="fade-up" data-aos-duration="1000">
+                <h3>Dashboard Gamer</h3>
+                <p>Panel de control interactivo con estadísticas en tiempo real y UI estilo sci‑fi.</p>
                 <div class="tags">
                     <span class="tag">JavaScript</span>
-                    <span class="tag">Web</span>
+                    <span class="tag">UI/UX</span>
+                    <span class="tag">Neón</span>
                 </div>
             </div>
 
-            <div class="project-card" data-aos="fade-up" data-aos-delay="150">
-                <h3>Proyecto 2</h3>
-                <p>Descripción breve del proyecto.</p>
+            <div class="project-card tilt" data-aos="fade-up" data-aos-delay="150" data-aos-duration="1000">
+                <h3>Detector de IA</h3>
+                <p>Modelo de IA que analiza texto y clasifica contenido para tareas de seguridad.</p>
                 <div class="tags">
                     <span class="tag">Python</span>
                     <span class="tag">IA</span>
+                    <span class="tag">ML</span>
+                </div>
+            </div>
+
+            <div class="project-card tilt" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                <h3>API de utilidades</h3>
+                <p>Conjunto de microservicios pensados para integrarse en proyectos más grandes.</p>
+                <div class="tags">
+                    <span class="tag">APIs</span>
+                    <span class="tag">Node.js</span>
                 </div>
             </div>
 
@@ -99,14 +99,16 @@
     <footer>
         <p>© 2026 Tu Nombre — Portafolio creado con HTML, CSS y JS</p>
         <div class="social">
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Email</a>
+            <a href="#" target="_blank">GitHub</a>
+            <a href="#" target="_blank">LinkedIn</a>
+            <a href="mailto:tucorreo@example.com" target="_blank">Email</a>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init();</script>
+    <script src="script.js"></script>
 </body>
 </html>
