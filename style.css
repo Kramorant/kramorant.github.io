@@ -418,10 +418,12 @@ footer {
 .title-purple {
     font-size: 2.6rem;
     font-weight: 700;
-    color: var(--primary); /* Morado neón */
+    color: var(--primary);
     text-shadow: 0 0 12px rgba(127, 0, 255, 0.6);
     margin-bottom: 2rem;
     text-align: center;
+    display: block;
+    width: 100%;
 }
 
 /* Efecto scanline para títulos */
