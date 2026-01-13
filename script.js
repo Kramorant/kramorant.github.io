@@ -337,3 +337,12 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: 1.2
     });
 });
+
+// Despliegue holográfico de la barra superior
+gsap.to(".holographic-nav", {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: "power3.out",
+    delay: 0.3
+});
