@@ -434,6 +434,8 @@ footer {
     display: inline-block;
     color: var(--primary);
     text-shadow: 0 0 12px rgba(127, 0, 255, 0.6);
+    text-align: center; 
+    display: inline-block;
 }
 
 /* Líneas horizontales */
