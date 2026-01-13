@@ -227,10 +227,7 @@ loadRepos();
 async function loadGitHubDashboard() {
     const user = "Kramorant";
 
-/* --- PERFIL --- */
-async function loadGitHubDashboard() {
-    const user = "Kramorant";
-
+    /* Perfil */
     const profileRes = await fetch(`https://api.github.com/users/${user}`);
     const profile = await profileRes.json();
 
@@ -239,7 +236,7 @@ async function loadGitHubDashboard() {
     document.getElementById("gh-bio").textContent = profile.bio || "Sin biografía";
     document.getElementById("gh-followers").textContent = `👥 ${profile.followers} seguidores`;
 
-    /* PROYECTOS DESTACADOS */
+    /* Repos destacados */
     const reposRes = await fetch(`https://api.github.com/users/${user}/repos`);
     const repos = await reposRes.json();
 
@@ -257,7 +254,7 @@ async function loadGitHubDashboard() {
         featuredContainer.appendChild(card);
     });
 
-    /* ACTIVIDAD RECIENTE */
+    /* Actividad reciente */
     const eventsRes = await fetch(`https://api.github.com/users/${user}/events`);
     const events = await eventsRes.json();
 
@@ -272,104 +269,71 @@ async function loadGitHubDashboard() {
 
 loadGitHubDashboard();
 
-/* --- TERMINAL --- */
-const terminalOutput = document.getElementById("terminal-output");
-const terminalInput = document.getElementById("terminal-input");
+/* --- Animaciones GSAP para el Dashboard --- */
 
-function printToTerminal(text) {
-    const line = document.createElement("div");
-    line.textContent = text;
-    terminalOutput.appendChild(line);
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-}
-
-async function runCommand(cmd) {
-    const user = "Kramorant";
-
-    switch (cmd) {
-        case "help":
-            printToTerminal("help - Mostrar ayuda");
-            printToTerminal("whoami - Información del usuario");
-            printToTerminal("repos - Lista de repositorios");
-            printToTerminal("activity - Actividad reciente");
-            break;
-
-        case "whoami":
-            printToTerminal(`Usuario: ${user}`);
-            break;
-
-        case "repos":
-            const reposRes = await fetch(`https://api.github.com/users/${user}/repos`);
-            const repos = await reposRes.json();
-            repos.forEach(r => printToTerminal(`- ${r.name}`));
-            break;
-
-        case "activity":
-            const eventsRes = await fetch(`https://api.github.com/users/${user}/events`);
-            const events = await eventsRes.json();
-            events.slice(0, 5).forEach(ev => printToTerminal(`${ev.type} — ${ev.repo.name}`));
-            break;
-
-        default:
-            printToTerminal(`Comando no reconocido: ${cmd}`);
-    }
-}
-
-terminalInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        const cmd = terminalInput.value.trim();
-        printToTerminal("> " + cmd);
-        runCommand(cmd);
-        terminalInput.value = "";
-    }
-});
-
-/* --- LOGS EN VIVO --- */
-const logsContainer = document.getElementById("logs-container");
-
-function addLog(text, type = "log-purple") {
-    const entry = document.createElement("div");
-    entry.className = `log-entry ${type}`;
-    entry.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
-    logsContainer.appendChild(entry);
-    logsContainer.scrollTop = logsContainer.scrollHeight;
-}
-
-async function updateLogs() {
-    const user = "Kramorant";
-    const res = await fetch(`https://api.github.com/users/${user}/events`);
-    const events = await res.json();
-
-    events.slice(0, 5).forEach(ev => {
-        let color = "log-purple";
-
-        if (ev.type.includes("Push")) color = "log-green";
-        if (ev.type.includes("Watch")) color = "log-blue";
-        if (ev.type.includes("Fork")) color = "log-yellow";
-
-        addLog(`${ev.type} — ${ev.repo.name}`, color);
-    });
-}
-
-updateLogs();
-setInterval(updateLogs, 30000);
-
-/* --- ANIMACIONES GSAP --- */
 document.addEventListener("DOMContentLoaded", () => {
 
-    gsap.to(".holographic-nav", {
-        opacity: 1,
-        y: 0,
+    // Título principal con efecto holográfico
+    gsap.from(".dashboard-container h1", {
+        opacity: 0,
+        y: -40,
         duration: 1.2,
-        ease: "power3.out",
-        delay: 0.3
+        ease: "power3.out"
     });
 
+    // Paneles que aparecen uno por uno
     gsap.from(".panel", {
         opacity: 0,
         y: 40,
         duration: 1.2,
         stagger: 0.25,
         ease: "power3.out"
+    });
+
+    // Avatar con efecto de zoom holográfico
+    gsap.from(".gh-avatar", {
+        opacity: 0,
+        scale: 0.6,
+        duration: 1.2,
+        delay: 0.5,
+        ease: "back.out(1.7)"
+    });
+
+    // Glow pulsante en el borde del avatar
+    gsap.to(".gh-avatar", {
+        boxShadow: "0 0 25px var(--accent)",
+        repeat: -1,
+        yoyo: true,
+        duration: 2.5,
+        ease: "sine.inOut"
+    });
+
+    // Estadísticas con fade-in suave
+    gsap.from(".gh-stats img", {
+        opacity: 0,
+        scale: 0.9,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power2.out"
+    });
+
+    // Repos destacados con efecto de aparición holográfica
+    gsap.from("#featured-list .repo-card", {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power2.out",
+        delay: 1
+    });
+
+    // Actividad reciente con deslizamiento lateral
+    gsap.from("#activity-list li", {
+        opacity: 0,
+        x: -30,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power2.out",
+        delay: 1.2
     });
 });
