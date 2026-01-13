@@ -273,6 +273,25 @@ loadGitHubDashboard();
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Terminal aparece con efecto de materialización
+gsap.from(".terminal-panel", {
+    opacity: 0,
+    y: 40,
+    duration: 1.2,
+    ease: "power3.out",
+    delay: 0.6
+});
+
+// Logs aparecen con fade holográfico
+gsap.from(".logs-panel", {
+    opacity: 0,
+    y: 40,
+    duration: 1.2,
+    ease: "power3.out",
+    delay: 0.8
+});
+
+    
     // Título principal con efecto holográfico
     gsap.from(".dashboard-container h1", {
         opacity: 0,
@@ -346,3 +365,88 @@ gsap.to(".holographic-nav", {
     ease: "power3.out",
     delay: 0.3
 });
+
+/* --- TERMINAL INTERACTIVA --- */
+
+const terminalOutput = document.getElementById("terminal-output");
+const terminalInput = document.getElementById("terminal-input");
+
+function printToTerminal(text) {
+    const line = document.createElement("div");
+    line.textContent = text;
+    terminalOutput.appendChild(line);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+async function runCommand(cmd) {
+    const user = "Kramorant";
+
+    switch (cmd) {
+        case "help":
+            printToTerminal("Comandos disponibles:");
+            printToTerminal("help - Mostrar ayuda");
+            printToTerminal("whoami - Información del usuario");
+            printToTerminal("repos - Lista de repositorios");
+            printToTerminal("activity - Actividad reciente");
+            break;
+
+        case "whoami":
+            printToTerminal(`Usuario: ${user}`);
+            break;
+
+        case "repos":
+            const reposRes = await fetch(`https://api.github.com/users/${user}/repos`);
+            const repos = await reposRes.json();
+            repos.forEach(r => printToTerminal(`- ${r.name}`));
+            break;
+
+        case "activity":
+            const eventsRes = await fetch(`https://api.github.com/users/${user}/events`);
+            const events = await eventsRes.json();
+            events.slice(0, 5).forEach(ev => printToTerminal(`${ev.type} — ${ev.repo.name}`));
+            break;
+
+        default:
+            printToTerminal(`Comando no reconocido: ${cmd}`);
+    }
+}
+
+terminalInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const cmd = terminalInput.value.trim();
+        printToTerminal("> " + cmd);
+        runCommand(cmd);
+        terminalInput.value = "";
+    }
+});
+
+/* --- PANEL DE LOGS EN VIVO --- */
+
+const logsContainer = document.getElementById("logs-container");
+
+function addLog(text, type = "log-purple") {
+    const entry = document.createElement("div");
+    entry.className = `log-entry ${type}`;
+    entry.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+    logsContainer.appendChild(entry);
+    logsContainer.scrollTop = logsContainer.scrollHeight;
+}
+
+async function updateLogs() {
+    const user = "Kramorant";
+    const res = await fetch(`https://api.github.com/users/${user}/events`);
+    const events = await res.json();
+
+    events.slice(0, 5).forEach(ev => {
+        let color = "log-purple";
+
+        if (ev.type.includes("Push")) color = "log-green";
+        if (ev.type.includes("Watch")) color = "log-blue";
+        if (ev.type.includes("Fork")) color = "log-yellow";
+
+        addLog(`${ev.type} — ${ev.repo.name}`, color);
+    });
+}
+
+updateLogs();
+setInterval(updateLogs, 30000);
