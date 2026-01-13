@@ -177,3 +177,29 @@ if (pageTransition && window.gsap) {
         });
     }
 }
+
+/* Repositorios dinámicos */
+async function loadRepos() {
+    const container = document.getElementById("repo-list");
+    if (!container) return;
+
+    const res = await fetch("https://api.github.com/users/Kramorant/repos");
+    const repos = await res.json();
+
+    repos
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 6)
+        .forEach(repo => {
+            const card = document.createElement("div");
+            card.className = "repo-card";
+            card.innerHTML = `
+                <h3>${repo.name}</h3>
+                <p>${repo.description || "Sin descripción"}</p>
+                <p>⭐ ${repo.stargazers_count} — 🍴 ${repo.forks_count}</p>
+                <a href="${repo.html_url}" target="_blank">Ver en GitHub</a>
+            `;
+            container.appendChild(card);
+        });
+}
+
+loadRepos();
