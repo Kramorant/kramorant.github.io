@@ -602,3 +602,34 @@ footer {
     transition: 0.3s ease;
     box-shadow: 0 0 30px rgba(127, 0, 255, 0.5);
 }
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+    background: rgba(20, 0, 40, 0.6);
+    border-bottom: 1px solid rgba(127, 0, 255, 0.3);
+    box-shadow: 0 0 12px rgba(127, 0, 255, 0.2);
+    backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+    text-shadow: 0 0 8px var(--accent);
+}
+
+.nav-link.active {
+    color: var(--accent);
+    text-shadow: 0 0 12px var(--accent);
+}
