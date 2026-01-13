@@ -568,3 +568,37 @@ footer {
     border: 1px solid rgba(127,0,255,0.4);
     box-shadow: 0 0 12px rgba(127,0,255,0.2);
 }
+
+/* Glow dinámico en paneles */
+.panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(127, 0, 255, 0.25),
+        rgba(0, 255, 255, 0.15),
+        rgba(127, 0, 255, 0.25)
+    );
+    opacity: 0;
+    mix-blend-mode: overlay;
+    animation: hologlow 6s ease-in-out infinite;
+}
+
+@keyframes hologlow {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.25; }
+    100% { opacity: 0.1; }
+}
+
+/* Hover holográfico */
+.panel:hover {
+    transform: translateY(-4px);
+    transition: 0.3s ease;
+    box-shadow: 0 0 30px rgba(127, 0, 255, 0.5);
+}
