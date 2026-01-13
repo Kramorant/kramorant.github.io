@@ -200,6 +200,24 @@ async function loadRepos() {
             `;
             container.appendChild(card);
         });
+
+    /* Actividad reciente */
+async function loadActivity() {
+    const list = document.getElementById("activity-list");
+    if (!list) return;
+
+    const res = await fetch("https://api.github.com/users/Kramorant/events");
+    const events = await res.json();
+
+    events.slice(0, 5).forEach(ev => {
+        const li = document.createElement("li");
+        li.textContent = `${ev.type} — ${ev.repo.name}`;
+        list.appendChild(li);
+    });
+}
+
+loadActivity();
+
 }
 
 loadRepos();
