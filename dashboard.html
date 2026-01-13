@@ -30,24 +30,27 @@
             </div>
         </div>
 
-        <!-- Estadísticas -->
-        <div class="panel gh-stats">
-            <h2 class="title-purple scanline">Estadísticas</h2>
-            <img src="https://github-readme-stats.vercel.app/api?username=Kramorant&show_icons=true&theme=tokyonight">
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kramorant&layout=compact&theme=tokyonight">
-        </div>
-
-        <!-- Proyectos destacados -->
-        <div class="panel">
-            <h2 class="title-purple scanline">Proyectos destacados</h2>
-            <div id="featured-list" class="repo-grid"></div>
-        </div>
-
         <!-- Actividad reciente -->
         <div class="panel">
             <h2 class="title-purple scanline">Actividad reciente</h2>
             <ul id="activity-list" class="gh-activity"></ul>
         </div>
+
+        <!-- TERMINAL INTERACTIVA -->
+<div class="panel terminal-panel">
+    <h2 class="title-purple scanline">Terminal</h2>
+    <div id="terminal-output" class="terminal-output"></div>
+    <div class="terminal-input-container">
+        <span class="terminal-prefix">></span>
+        <input id="terminal-input" class="terminal-input" type="text" autocomplete="off" placeholder="Escribe un comando...">
+    </div>
+</div>
+
+<!-- PANEL DE LOGS EN VIVO -->
+<div class="panel logs-panel">
+    <h2 class="title-purple scanline">Logs del Sistema</h2>
+    <div id="logs-container" class="logs-container"></div>
+</div>
 
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
