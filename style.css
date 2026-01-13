@@ -461,3 +461,35 @@ footer {
     0% { transform: translateY(-10%); }
     100% { transform: translateY(10%); }
 }
+
+.github-repos {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.repo-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(127,0,255,0.4);
+    padding: 1.5rem;
+    border-radius: 14px;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(127,0,255,0.2);
+}
+
+.repo-card h3 {
+    margin-top: 0;
+    color: var(--secondary);
+}
+
+.repo-card a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
