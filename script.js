@@ -268,3 +268,72 @@ async function loadGitHubDashboard() {
 }
 
 loadGitHubDashboard();
+
+/* --- Animaciones GSAP para el Dashboard --- */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Título principal con efecto holográfico
+    gsap.from(".dashboard-container h1", {
+        opacity: 0,
+        y: -40,
+        duration: 1.2,
+        ease: "power3.out"
+    });
+
+    // Paneles que aparecen uno por uno
+    gsap.from(".panel", {
+        opacity: 0,
+        y: 40,
+        duration: 1.2,
+        stagger: 0.25,
+        ease: "power3.out"
+    });
+
+    // Avatar con efecto de zoom holográfico
+    gsap.from(".gh-avatar", {
+        opacity: 0,
+        scale: 0.6,
+        duration: 1.2,
+        delay: 0.5,
+        ease: "back.out(1.7)"
+    });
+
+    // Glow pulsante en el borde del avatar
+    gsap.to(".gh-avatar", {
+        boxShadow: "0 0 25px var(--accent)",
+        repeat: -1,
+        yoyo: true,
+        duration: 2.5,
+        ease: "sine.inOut"
+    });
+
+    // Estadísticas con fade-in suave
+    gsap.from(".gh-stats img", {
+        opacity: 0,
+        scale: 0.9,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power2.out"
+    });
+
+    // Repos destacados con efecto de aparición holográfica
+    gsap.from("#featured-list .repo-card", {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power2.out",
+        delay: 1
+    });
+
+    // Actividad reciente con deslizamiento lateral
+    gsap.from("#activity-list li", {
+        opacity: 0,
+        x: -30,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power2.out",
+        delay: 1.2
+    });
+});
