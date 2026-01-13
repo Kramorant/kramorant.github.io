@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Dashboard — Pablo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <!-- NAV -->
+    <nav class="nav">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="projects.html" class="nav-link">Proyectos</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+    </nav>
+
+    <section class="dashboard-container">
+        <h1 class="title-purple scanline">GitHub Dashboard</h1>
+
+        <!-- Perfil -->
+        <div class="panel gh-profile">
+            <img id="gh-avatar" class="gh-avatar" alt="Avatar de GitHub">
+            <div>
+                <h2 id="gh-name"></h2>
+                <p id="gh-bio"></p>
+                <p id="gh-followers"></p>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="panel gh-stats">
+            <h2 class="title-purple scanline">Estadísticas</h2>
+            <img src="https://github-readme-stats.vercel.app/api?username=Kramorant&show_icons=true&theme=tokyonight">
+            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kramorant&layout=compact&theme=tokyonight">
+        </div>
+
+        <!-- Proyectos destacados -->
+        <div class="panel">
+            <h2 class="title-purple scanline">Proyectos destacados</h2>
+            <div id="featured-list" class="repo-grid"></div>
+        </div>
+
+        <!-- Actividad reciente -->
+        <div class="panel">
+            <h2 class="title-purple scanline">Actividad reciente</h2>
+            <ul id="activity-list" class="gh-activity"></ul>
+        </div>
+
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
