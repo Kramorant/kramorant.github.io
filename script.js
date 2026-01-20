@@ -200,8 +200,11 @@ async function loadRepos() {
             `;
             container.appendChild(card);
         });
+}
 
-    /* Actividad reciente */
+loadRepos();
+
+/* Actividad reciente */
 async function loadActivity() {
     const list = document.getElementById("activity-list");
     if (!list) return;
@@ -217,10 +220,6 @@ async function loadActivity() {
 }
 
 loadActivity();
-
-}
-
-loadRepos();
 
 /* --- Animaciones GSAP para el Dashboard --- */
 
@@ -403,47 +402,12 @@ if (terminalInput) {
     });
 }
 
-/* --- LOGS EN VIVO --- */
-const logsContainer = document.getElementById("logs-container");
-
-function addLog(text, type = "log-purple") {
-    if (!logsContainer) return;
-    const entry = document.createElement("div");
-    entry.className = `log-entry ${type}`;
-    entry.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
-    logsContainer.appendChild(entry);
-    logsContainer.scrollTop = logsContainer.scrollHeight;
-}
-
-async function updateLogs() {
-    try {
-        const res = await fetch(`https://api.github.com/users/${GH_USER}/events`);
-        const events = await res.json();
-
-        if (!logsContainer) return;
-        logsContainer.innerHTML = "";
-
-        events.slice(0, 5).forEach(ev => {
-            let color = "log-purple";
-            if (ev.type.includes("Push")) color = "log-green";
-            if (ev.type.includes("Watch")) color = "log-blue";
-            if (ev.type.includes("Fork")) color = "log-yellow";
-
-            addLog(`${ev.type} — ${ev.repo.name}`, color);
-        });
-    } catch (err) {
-        console.error("Error cargando logs:", err);
-    }
-}
-
-/* --- ANIMACIONES GSAP --- */
+/* --- TERMINAL --- */
 document.addEventListener("DOMContentLoaded", () => {
     // Solo ejecutamos si estamos en el dashboard
     if (!document.body.classList.contains("dashboard-body")) return;
 
     loadGitHubDashboard();
-    updateLogs();
-    setInterval(updateLogs, 30000);
 
     if (typeof gsap !== "undefined") {
         gsap.to(".holographic-nav", {
