@@ -407,6 +407,20 @@ async function runCommand(cmd) {
             break;
         }
 
+        case "about": 
+    printToTerminal("Nombre: Pablo (alias: Kramorant)");
+    printToTerminal("Rol: Estudiante de informática y desarrollador web en crecimiento");
+    printToTerminal("Estilo: Interfaces futuristas, estética neon gamer, HUDs animados");
+    printToTerminal("Filosofía: Crear experiencias que se sientan vivas, no solo páginas web");
+    printToTerminal("Stack: HTML, CSS, JavaScript, GitHub, GSAP, UI/UX");
+    printToTerminal("Proyecto actual: Dashboard holográfico personal");
+    printToTerminal("Objetivo: Convertir mi portafolio en un ecosistema interactivo y evolutivo");
+    break;
+        
+    case "clear":
+    terminalOutput.innerHTML = "";
+    break;
+        
         default:
             printToTerminal(`Comando no reconocido: ${cmd}`);
     }
