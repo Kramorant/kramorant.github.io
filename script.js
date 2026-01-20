@@ -309,6 +309,70 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power2.out",
             delay: 1.2
         });
+
+        // Animación del banner glitch futurista
+gsap.to(".banner-glitch", {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: "power3.out",
+    delay: 0.4
+});
+
+// Efecto de aparición secuencial del texto
+gsap.from(".banner-sub", {
+    opacity: 0,
+    x: -20,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: "power2.out",
+    delay: 0.7
+});
+
+// Pequeño glitch en el título
+gsap.fromTo(".banner-title",
+    { x: -2 },
+    {
+        x: 2,
+        repeat: 6,
+        yoyo: true,
+        duration: 0.05,
+        ease: "sine.inOut",
+        delay: 1.1
+    }
+);
+
+// --- EFECTO DE ESCRITURA PARA EL BANNER ---
+
+function typeLine(elementId, text, delay = 0) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    el.textContent = "";
+    el.classList.add("typing-cursor");
+
+    let i = 0;
+
+    setTimeout(() => {
+        const interval = setInterval(() => {
+            el.textContent += text[i];
+            i++;
+
+            if (i === text.length) {
+                clearInterval(interval);
+                el.classList.remove("typing-cursor");
+            }
+        }, 40); // velocidad de escritura
+    }, delay);
+}
+
+// Ejecutar typing effect después del despliegue del banner
+setTimeout(() => {
+    typeLine("boot-1", "Boot sequence initialized...", 0);
+    typeLine("boot-2", "Loading GitHub modules... OK", 600);
+    typeLine("boot-3", "Dashboard status: ONLINE", 1200);
+}, 900);
+        
     }
 });
 
