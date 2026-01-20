@@ -337,3 +337,176 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: 1.2
     });
 });
+
+/* --- CONFIG --- */
+const GH_USER = "Kramorant";
+
+/* --- PERFIL + REPOS DESTACADOS + ACTIVIDAD --- */
+async function loadGitHubDashboard() {
+    try {
+        const profileRes = await fetch(`https://api.github.com/users/${GH_USER}`);
+        const profile = await profileRes.json();
+
+        const avatar = document.getElementById("gh-avatar");
+        const nameEl = document.getElementById("gh-name");
+        const bioEl = document.getElementById("gh-bio");
+        const followersEl = document.getElementById("gh-followers");
+
+        if (avatar) avatar.src = profile.avatar_url;
+        if (nameEl) nameEl.textContent = profile.name || profile.login;
+        if (bioEl) bioEl.textContent = profile.bio || "Sin biografía";
+        if (followersEl) followersEl.textContent = `👥 ${profile.followers} seguidores`;
+
+        const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos`);
+        const repos = await reposRes.json();
+
+        const featuredContainer = document.getElementById("featured-list");
+        if (featuredContainer) {
+            const featured = repos.filter(r => r.topics && r.topics.includes("portfolio"));
+            featuredContainer.innerHTML = "";
+            featured.forEach(repo => {
+                const card = document.createElement("div");
+                card.className = "repo-card";
+                card.innerHTML = `
+                    <h3>${repo.name}</h3>
+                    <p>${repo.description || "Sin descripción"}</p>
+                    <a href="${repo.html_url}" target="_blank">Ver proyecto</a>
+                `;
+                featuredContainer.appendChild(card);
+            });
+        }
+
+        const eventsRes = await fetch(`https://api.github.com/users/${GH_USER}/events`);
+        const events = await eventsRes.json();
+
+        const activityList = document.getElementById("activity-list");
+        if (activityList) {
+            activityList.innerHTML = "";
+            events.slice(0, 5).forEach(ev => {
+                const li = document.createElement("li");
+                li.textContent = `${ev.type} — ${ev.repo.name}`;
+                activityList.appendChild(li);
+            });
+        }
+    } catch (err) {
+        console.error("Error cargando dashboard:", err);
+    }
+}
+
+/* --- TERMINAL --- */
+const terminalOutput = document.getElementById("terminal-output");
+const terminalInput = document.getElementById("terminal-input");
+
+function printToTerminal(text) {
+    if (!terminalOutput) return;
+    const line = document.createElement("div");
+    line.textContent = text;
+    terminalOutput.appendChild(line);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+async function runCommand(cmd) {
+    switch (cmd) {
+        case "help":
+            printToTerminal("Comandos disponibles:");
+            printToTerminal("help - Mostrar ayuda");
+            printToTerminal("whoami - Información del usuario");
+            printToTerminal("repos - Lista de repositorios");
+            printToTerminal("activity - Actividad reciente");
+            break;
+
+        case "whoami":
+            printToTerminal(`Usuario: ${GH_USER}`);
+            break;
+
+        case "repos": {
+            const res = await fetch(`https://api.github.com/users/${GH_USER}/repos`);
+            const repos = await res.json();
+            repos.forEach(r => printToTerminal(`- ${r.name}`));
+            break;
+        }
+
+        case "activity": {
+            const res = await fetch(`https://api.github.com/users/${GH_USER}/events`);
+            const events = await res.json();
+            events.slice(0, 5).forEach(ev => printToTerminal(`${ev.type} — ${ev.repo.name}`));
+            break;
+        }
+
+        default:
+            printToTerminal(`Comando no reconocido: ${cmd}`);
+    }
+}
+
+if (terminalInput) {
+    terminalInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const cmd = terminalInput.value.trim();
+            if (!cmd) return;
+            printToTerminal("> " + cmd);
+            runCommand(cmd);
+            terminalInput.value = "";
+        }
+    });
+}
+
+/* --- LOGS EN VIVO --- */
+const logsContainer = document.getElementById("logs-container");
+
+function addLog(text, type = "log-purple") {
+    if (!logsContainer) return;
+    const entry = document.createElement("div");
+    entry.className = `log-entry ${type}`;
+    entry.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+    logsContainer.appendChild(entry);
+    logsContainer.scrollTop = logsContainer.scrollHeight;
+}
+
+async function updateLogs() {
+    try {
+        const res = await fetch(`https://api.github.com/users/${GH_USER}/events`);
+        const events = await res.json();
+
+        if (!logsContainer) return;
+        logsContainer.innerHTML = "";
+
+        events.slice(0, 5).forEach(ev => {
+            let color = "log-purple";
+            if (ev.type.includes("Push")) color = "log-green";
+            if (ev.type.includes("Watch")) color = "log-blue";
+            if (ev.type.includes("Fork")) color = "log-yellow";
+
+            addLog(`${ev.type} — ${ev.repo.name}`, color);
+        });
+    } catch (err) {
+        console.error("Error cargando logs:", err);
+    }
+}
+
+/* --- ANIMACIONES GSAP --- */
+document.addEventListener("DOMContentLoaded", () => {
+    // Solo ejecutamos si estamos en el dashboard
+    if (!document.body.classList.contains("dashboard-body")) return;
+
+    loadGitHubDashboard();
+    updateLogs();
+    setInterval(updateLogs, 30000);
+
+    if (typeof gsap !== "undefined") {
+        gsap.to(".holographic-nav", {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        gsap.from(".panel", {
+            opacity: 0,
+            y: 40,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+    }
+});
