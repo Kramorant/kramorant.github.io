@@ -222,53 +222,6 @@ loadActivity();
 
 loadRepos();
 
-/* --- GitHub Dashboard --- */
-
-async function loadGitHubDashboard() {
-    const user = "Kramorant";
-
-    /* Perfil */
-    const profileRes = await fetch(`https://api.github.com/users/${user}`);
-    const profile = await profileRes.json();
-
-    document.getElementById("gh-avatar").src = profile.avatar_url;
-    document.getElementById("gh-name").textContent = profile.name || profile.login;
-    document.getElementById("gh-bio").textContent = profile.bio || "Sin biografía";
-    document.getElementById("gh-followers").textContent = `👥 ${profile.followers} seguidores`;
-
-    /* Repos destacados */
-    const reposRes = await fetch(`https://api.github.com/users/${user}/repos`);
-    const repos = await reposRes.json();
-
-    const featured = repos.filter(r => r.topics && r.topics.includes("portfolio"));
-    const featuredContainer = document.getElementById("featured-list");
-
-    featured.forEach(repo => {
-        const card = document.createElement("div");
-        card.className = "repo-card";
-        card.innerHTML = `
-            <h3>${repo.name}</h3>
-            <p>${repo.description || "Sin descripción"}</p>
-            <a href="${repo.html_url}" target="_blank">Ver proyecto</a>
-        `;
-        featuredContainer.appendChild(card);
-    });
-
-    /* Actividad reciente */
-    const eventsRes = await fetch(`https://api.github.com/users/${user}/events`);
-    const events = await eventsRes.json();
-
-    const activityList = document.getElementById("activity-list");
-
-    events.slice(0, 5).forEach(ev => {
-        const li = document.createElement("li");
-        li.textContent = `${ev.type} — ${ev.repo.name}`;
-        activityList.appendChild(li);
-    });
-}
-
-loadGitHubDashboard();
-
 /* --- Animaciones GSAP para el Dashboard --- */
 
 document.addEventListener("DOMContentLoaded", () => {
