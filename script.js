@@ -200,8 +200,9 @@ async function loadRepos() {
             `;
             container.appendChild(card);
         });
+}
 
-    /* Actividad reciente */
+/* Actividad reciente */
 async function loadActivity() {
     const list = document.getElementById("activity-list");
     if (!list) return;
@@ -216,79 +217,99 @@ async function loadActivity() {
     });
 }
 
-loadActivity();
-
+// Load repos and activity when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        loadRepos();
+        loadActivity();
+    });
+} else {
+    loadRepos();
+    loadActivity();
 }
-
-loadRepos();
 
 /* --- Animaciones GSAP para el Dashboard --- */
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Solo ejecutamos si estamos en el dashboard
+    if (!document.body.classList.contains("dashboard-body")) return;
 
-    // Título principal con efecto holográfico
-    gsap.from(".dashboard-container h1", {
-        opacity: 0,
-        y: -40,
-        duration: 1.2,
-        ease: "power3.out"
-    });
+    loadGitHubDashboard();
 
-    // Paneles que aparecen uno por uno
-    gsap.from(".panel", {
-        opacity: 0,
-        y: 40,
-        duration: 1.2,
-        stagger: 0.25,
-        ease: "power3.out"
-    });
+    if (typeof gsap !== "undefined") {
+        // Animación nav holográfica
+        gsap.to(".holographic-nav", {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.3
+        });
 
-    // Avatar con efecto de zoom holográfico
-    gsap.from(".gh-avatar", {
-        opacity: 0,
-        scale: 0.6,
-        duration: 1.2,
-        delay: 0.5,
-        ease: "back.out(1.7)"
-    });
+        // Título principal con efecto holográfico
+        gsap.from(".dashboard-container h1", {
+            opacity: 0,
+            y: -40,
+            duration: 1.2,
+            ease: "power3.out"
+        });
 
-    // Glow pulsante en el borde del avatar
-    gsap.to(".gh-avatar", {
-        boxShadow: "0 0 25px var(--accent)",
-        repeat: -1,
-        yoyo: true,
-        duration: 2.5,
-        ease: "sine.inOut"
-    });
+        // Paneles que aparecen uno por uno
+        gsap.from(".panel", {
+            opacity: 0,
+            y: 40,
+            duration: 1.2,
+            stagger: 0.25,
+            ease: "power3.out"
+        });
 
-    // Estadísticas con fade-in suave
-    gsap.from(".gh-stats img", {
-        opacity: 0,
-        scale: 0.9,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power2.out"
-    });
+        // Avatar con efecto de zoom holográfico
+        gsap.from(".gh-avatar", {
+            opacity: 0,
+            scale: 0.6,
+            duration: 1.2,
+            delay: 0.5,
+            ease: "back.out(1.7)"
+        });
 
-    // Repos destacados con efecto de aparición holográfica
-    gsap.from("#featured-list .repo-card", {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power2.out",
-        delay: 1
-    });
+        // Glow pulsante en el borde del avatar
+        gsap.to(".gh-avatar", {
+            boxShadow: "0 0 25px var(--accent)",
+            repeat: -1,
+            yoyo: true,
+            duration: 2.5,
+            ease: "sine.inOut"
+        });
 
-    // Actividad reciente con deslizamiento lateral
-    gsap.from("#activity-list li", {
-        opacity: 0,
-        x: -30,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power2.out",
-        delay: 1.2
-    });
+        // Estadísticas con fade-in suave
+        gsap.from(".gh-stats img", {
+            opacity: 0,
+            scale: 0.9,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+
+        // Repos destacados con efecto de aparición holográfica
+        gsap.from("#featured-list .repo-card", {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power2.out",
+            delay: 1
+        });
+
+        // Actividad reciente con deslizamiento lateral
+        gsap.from("#activity-list li", {
+            opacity: 0,
+            x: -30,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power2.out",
+            delay: 1.2
+        });
+    }
 });
 
 /* --- CONFIG --- */
@@ -402,64 +423,3 @@ if (terminalInput) {
         }
     });
 }
-
-/* --- LOGS EN VIVO --- */
-const logsContainer = document.getElementById("logs-container");
-
-function addLog(text, type = "log-purple") {
-    if (!logsContainer) return;
-    const entry = document.createElement("div");
-    entry.className = `log-entry ${type}`;
-    entry.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
-    logsContainer.appendChild(entry);
-    logsContainer.scrollTop = logsContainer.scrollHeight;
-}
-
-async function updateLogs() {
-    try {
-        const res = await fetch(`https://api.github.com/users/${GH_USER}/events`);
-        const events = await res.json();
-
-        if (!logsContainer) return;
-        logsContainer.innerHTML = "";
-
-        events.slice(0, 5).forEach(ev => {
-            let color = "log-purple";
-            if (ev.type.includes("Push")) color = "log-green";
-            if (ev.type.includes("Watch")) color = "log-blue";
-            if (ev.type.includes("Fork")) color = "log-yellow";
-
-            addLog(`${ev.type} — ${ev.repo.name}`, color);
-        });
-    } catch (err) {
-        console.error("Error cargando logs:", err);
-    }
-}
-
-/* --- ANIMACIONES GSAP --- */
-document.addEventListener("DOMContentLoaded", () => {
-    // Solo ejecutamos si estamos en el dashboard
-    if (!document.body.classList.contains("dashboard-body")) return;
-
-    loadGitHubDashboard();
-    updateLogs();
-    setInterval(updateLogs, 30000);
-
-    if (typeof gsap !== "undefined") {
-        gsap.to(".holographic-nav", {
-            opacity: 1,
-            y: 0,
-            duration: 1.2,
-            ease: "power3.out",
-            delay: 0.3
-        });
-
-        gsap.from(".panel", {
-            opacity: 0,
-            y: 40,
-            duration: 1.2,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
-    }
-});
