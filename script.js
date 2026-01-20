@@ -387,6 +387,8 @@ async function runCommand(cmd) {
             printToTerminal("whoami - Información del usuario");
             printToTerminal("repos - Lista de repositorios");
             printToTerminal("activity - Actividad reciente");
+            printToTerminal("about - Información personal");
+            printToTerminal("clear - Limpia la terminal");
             break;
 
         case "whoami":
