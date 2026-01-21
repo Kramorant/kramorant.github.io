@@ -453,6 +453,7 @@ async function runCommand(cmd) {
             printToTerminal("activity - Actividad reciente");
             printToTerminal("about - Información personal");
             printToTerminal("clear - Limpia la terminal");
+            printToTerminal("motd - Versión compactada del banner");
             break;
 
         case "whoami":
@@ -486,7 +487,14 @@ async function runCommand(cmd) {
     case "clear":
     terminalOutput.innerHTML = "";
     break;
-        
+
+    case "motd":
+    printToTerminal("=== KRAMORANT // SYSTEM ===");
+    printToTerminal("Boot sequence initialized...");
+    printToTerminal("Modules loaded successfully.");
+    printToTerminal("Dashboard status: ONLINE");
+    break;
+
         default:
             printToTerminal(`Comando no reconocido: ${cmd}`);
     }
