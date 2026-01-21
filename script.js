@@ -5,7 +5,7 @@ const currentTheme = localStorage.getItem("theme");
 if (currentTheme) {
     document.documentElement.setAttribute("data-theme", currentTheme);
     if (toggleBtn) toggleBtn.textContent = currentTheme === "light" ? "🌙" : "☀️";
-} else 
+} else {
     document.documentElement.setAttribute("data-theme", "dark");
 }
 
