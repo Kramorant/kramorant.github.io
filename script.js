@@ -454,6 +454,7 @@ async function runCommand(cmd) {
             printToTerminal("about - Información personal");
             printToTerminal("clear - Limpia la terminal");
             printToTerminal("motd - Versión compactada del banner");
+            printToTerminal("glitch - Efecto glitch");
             break;
 
         case "whoami":
@@ -495,6 +496,16 @@ async function runCommand(cmd) {
     printToTerminal("Dashboard status: ONLINE");
     break;
 
+    case "glitch":
+    document.body.classList.add("screen-glitch");
+    printToTerminal("Activando glitch visual...");
+    setTimeout(() => {
+        document.body.classList.remove("screen-glitch");
+        printToTerminal("Glitch finalizado.");
+    }, 1000);
+    break;
+
+            
         default:
             printToTerminal(`Comando no reconocido: ${cmd}`);
     }
