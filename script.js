@@ -455,7 +455,6 @@ async function runCommand(cmd) {
             printToTerminal("clear - Limpia la terminal");
             printToTerminal("motd - Versión compactada del banner");
             printToTerminal("glitch - Efecto glitch");
-            printToTerminal("matrix - Efecto visual");
             break;
 
         case "whoami":
@@ -505,11 +504,6 @@ async function runCommand(cmd) {
         printToTerminal("Glitch finalizado.");
     }, 1000);
     break;
-
-    case "matrix":
-    printToTerminal("Iniciando efecto Matrix...");
-    startMatrixEffect();
-    break;
             
         default:
             printToTerminal(`Comando no reconocido: ${cmd}`);
@@ -526,32 +520,4 @@ if (terminalInput) {
             terminalInput.value = "";
         }
     });
-}
-
-/* --- MATRIX COMMAND --- */
-
-function startMatrixEffect() {
-    const container = document.createElement("div");
-    container.className = "matrix-rain";
-    document.body.appendChild(container);
-
-    const chars = "01░▒▓█";
-    const columns = Math.floor(window.innerWidth / 20);
-
-    for (let i = 0; i < columns; i++) {
-        const char = document.createElement("div");
-        char.className = "matrix-char";
-        char.textContent = chars[Math.floor(Math.random() * chars.length)];
-
-        char.style.left = `${i * 20}px`;
-        char.style.animationDuration = `${1 + Math.random() * 2}s`;
-        char.style.animationDelay = `${Math.random() * 1}s`;
-
-        container.appendChild(char);
-    }
-
-    // El efecto dura 3 segundos
-    setTimeout(() => {
-        container.remove();
-    }, 3000);
 }
