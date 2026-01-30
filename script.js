@@ -480,8 +480,8 @@ async function runCommand(cmd) {
     printToTerminal("Rol: Estudiante de informática y desarrollador web en crecimiento");
     printToTerminal("Estilo: Interfaces futuristas, estética neon gamer, HUDs animados");
     printToTerminal("Filosofía: Crear experiencias que se sientan vivas, no solo páginas web");
-    printToTerminal("Stack: HTML, CSS, JavaScript, GitHub, GSAP, UI/UX");
-    printToTerminal("Proyecto actual: Dashboard holográfico personal");
+    printToTerminal("Stack: HTML, CSS, JavaScript, PHP y SQL");
+    printToTerminal("Proyecto actual: Aplicación de generación de contraseñas en Python");
     printToTerminal("Objetivo: Convertir mi portafolio en un ecosistema interactivo y evolutivo");
     break;
         
