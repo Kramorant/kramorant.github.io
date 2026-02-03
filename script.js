@@ -235,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!document.body.classList.contains("dashboard-body")) return;
 
     loadGitHubDashboard();
+    setupStatsImageHandlers();
 
     if (typeof gsap !== "undefined") {
         // Animación nav holográfica
@@ -429,6 +430,132 @@ async function loadGitHubDashboard() {
     } catch (err) {
         console.error("Error cargando dashboard:", err);
     }
+}
+
+/* --- FALLBACK PARA ESTADÍSTICAS --- */
+async function loadStatsFallback() {
+    try {
+        const profileRes = await fetch(`https://api.github.com/users/${GH_USER}`);
+        const profile = await profileRes.json();
+        
+        const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos`);
+        const repos = await reposRes.json();
+        
+        // Calcular estadísticas básicas
+        const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
+        const publicRepos = profile.public_repos;
+        
+        // Obtener lenguajes más usados
+        const languages = {};
+        repos.forEach(repo => {
+            if (repo.language) {
+                languages[repo.language] = (languages[repo.language] || 0) + 1;
+            }
+        });
+        
+        const topLanguages = Object.entries(languages)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
+        
+        // Crear contenido fallback
+        const fallbackContainer = document.getElementById("stats-fallback");
+        if (fallbackContainer) {
+            fallbackContainer.innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value">${publicRepos}</div>
+                        <div class="stat-label">Repositorios Públicos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value">${totalStars}</div>
+                        <div class="stat-label">Stars Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍴</div>
+                        <div class="stat-value">${totalForks}</div>
+                        <div class="stat-label">Forks Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value">${profile.followers}</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                </div>
+                <div class="languages-list">
+                    <h3>Lenguajes más usados</h3>
+                    ${topLanguages.map(([lang, count]) => `
+                        <div class="language-item">
+                            <span class="language-name">${lang}</span>
+                            <span class="language-count">${count} repos</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            fallbackContainer.style.display = "block";
+        }
+    } catch (err) {
+        console.error("Error cargando estadísticas fallback:", err);
+        const fallbackContainer = document.getElementById("stats-fallback");
+        if (fallbackContainer) {
+            fallbackContainer.innerHTML = `
+                <p style="text-align: center; color: var(--accent); padding: 2rem;">
+                    ⚠️ No se pudieron cargar las estadísticas en este momento.
+                </p>
+            `;
+            fallbackContainer.style.display = "block";
+        }
+    }
+}
+
+/* --- MANEJADOR DE ERRORES PARA IMÁGENES DE ESTADÍSTICAS --- */
+function setupStatsImageHandlers() {
+    const statsImg = document.getElementById("gh-stats-img");
+    const langsImg = document.getElementById("gh-langs-img");
+    const statsContainer = document.getElementById("stats-container");
+    
+    let statsImgLoaded = false;
+    let langsImgLoaded = false;
+    let checkTimeout;
+    
+    // Función para verificar si ambas imágenes fallaron
+    function checkImageLoading() {
+        clearTimeout(checkTimeout);
+        checkTimeout = setTimeout(() => {
+            if (!statsImgLoaded && !langsImgLoaded) {
+                // Ambas imágenes fallaron, mostrar fallback
+                if (statsContainer) statsContainer.style.display = "none";
+                loadStatsFallback();
+            }
+        }, 3000); // Esperar 3 segundos antes de mostrar fallback
+    }
+    
+    if (statsImg) {
+        statsImg.addEventListener("load", () => {
+            statsImgLoaded = true;
+        });
+        
+        statsImg.addEventListener("error", () => {
+            statsImgLoaded = false;
+            checkImageLoading();
+        });
+    }
+    
+    if (langsImg) {
+        langsImg.addEventListener("load", () => {
+            langsImgLoaded = true;
+        });
+        
+        langsImg.addEventListener("error", () => {
+            langsImgLoaded = false;
+            checkImageLoading();
+        });
+    }
+    
+    // Iniciar verificación
+    checkImageLoading();
 }
 
 /* --- TERMINAL --- */
