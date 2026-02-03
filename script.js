@@ -433,7 +433,8 @@ async function loadGitHubDashboard() {
     }
 }
 
-/* --- FALLBACK PARA ESTADÍSTICAS --- */
+/* --- FALLBACK FOR STATISTICS --- */
+// Note: Fetches up to 100 repos. For users with 100+ repos, stats will reflect first 100 only.
 async function loadStatsFallback() {
     try {
         const profileRes = await fetch(`https://api.github.com/users/${GH_USER}`);
@@ -525,6 +526,7 @@ function setupStatsImageHandlers() {
     function checkImageLoading() {
         clearTimeout(checkTimeout);
         checkTimeout = setTimeout(() => {
+            // Final check: only show fallback if both images still haven't loaded
             if (!statsImgLoaded && !langsImgLoaded) {
                 // Both images failed, show fallback
                 if (statsContainer) statsContainer.style.display = "none";
