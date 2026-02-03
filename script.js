@@ -438,7 +438,7 @@ async function loadStatsFallback() {
         const profileRes = await fetch(`https://api.github.com/users/${GH_USER}`);
         const profile = await profileRes.json();
         
-        const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos`);
+        const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100`);
         const repos = await reposRes.json();
         
         // Calcular estadísticas básicas
@@ -520,7 +520,7 @@ function setupStatsImageHandlers() {
     let langsImgLoaded = false;
     let checkTimeout;
     
-    // Función para verificar si ambas imágenes fallaron
+    // Función para verificar si las imágenes fallaron
     function checkImageLoading() {
         clearTimeout(checkTimeout);
         checkTimeout = setTimeout(() => {
@@ -538,7 +538,6 @@ function setupStatsImageHandlers() {
         });
         
         statsImg.addEventListener("error", () => {
-            statsImgLoaded = false;
             checkImageLoading();
         });
     }
@@ -549,7 +548,6 @@ function setupStatsImageHandlers() {
         });
         
         langsImg.addEventListener("error", () => {
-            langsImgLoaded = false;
             checkImageLoading();
         });
     }
