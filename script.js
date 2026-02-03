@@ -235,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!document.body.classList.contains("dashboard-body")) return;
 
     loadGitHubDashboard();
+    setupStatsImageHandlers();
 
     if (typeof gsap !== "undefined") {
         // Animación nav holográfica
@@ -378,6 +379,7 @@ setTimeout(() => {
 
 /* --- CONFIG --- */
 const GH_USER = "Kramorant";
+const STATS_IMAGE_TIMEOUT_MS = 3000; // Wait time before showing fallback when images fail
 
 /* --- PERFIL + REPOS DESTACADOS + ACTIVIDAD --- */
 async function loadGitHubDashboard() {
@@ -429,6 +431,132 @@ async function loadGitHubDashboard() {
     } catch (err) {
         console.error("Error cargando dashboard:", err);
     }
+}
+
+/* --- FALLBACK FOR STATISTICS --- */
+// Note: Fetches up to 100 repos. For users with 100+ repos, stats will reflect first 100 only.
+async function loadStatsFallback() {
+    try {
+        const profileRes = await fetch(`https://api.github.com/users/${GH_USER}`);
+        const profile = await profileRes.json();
+        
+        const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100`);
+        const repos = await reposRes.json();
+        
+        // Calculate basic statistics
+        const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
+        const publicRepos = profile.public_repos;
+        
+        // Get most used languages
+        const languages = {};
+        repos.forEach(repo => {
+            if (repo.language) {
+                languages[repo.language] = (languages[repo.language] || 0) + 1;
+            }
+        });
+        
+        const topLanguages = Object.entries(languages)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
+        
+        // Create fallback content
+        const fallbackContainer = document.getElementById("stats-fallback");
+        if (fallbackContainer) {
+            fallbackContainer.innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value">${publicRepos}</div>
+                        <div class="stat-label">Repositorios Públicos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value">${totalStars}</div>
+                        <div class="stat-label">Stars Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍴</div>
+                        <div class="stat-value">${totalForks}</div>
+                        <div class="stat-label">Forks Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value">${profile.followers}</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                </div>
+                <div class="languages-list">
+                    <h3>Lenguajes más usados</h3>
+                    ${topLanguages.map(([lang, count]) => `
+                        <div class="language-item">
+                            <span class="language-name">${lang}</span>
+                            <span class="language-count">${count} repos</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            fallbackContainer.style.display = "block";
+        }
+    } catch (err) {
+        console.error("Error cargando estadísticas fallback:", err);
+        const fallbackContainer = document.getElementById("stats-fallback");
+        if (fallbackContainer) {
+            fallbackContainer.innerHTML = `
+                <p style="text-align: center; color: var(--accent); padding: 2rem;">
+                    ⚠️ No se pudieron cargar las estadísticas en este momento.
+                </p>
+            `;
+            fallbackContainer.style.display = "block";
+        }
+    }
+}
+
+/* --- MANEJADOR DE ERRORES PARA IMÁGENES DE ESTADÍSTICAS --- */
+function setupStatsImageHandlers() {
+    const statsImg = document.getElementById("gh-stats-img");
+    const langsImg = document.getElementById("gh-langs-img");
+    const statsContainer = document.getElementById("stats-container");
+    
+    let statsImgLoaded = false;
+    let langsImgLoaded = false;
+    let checkTimeout;
+    
+    // Function to check if images failed to load
+    function checkImageLoading() {
+        clearTimeout(checkTimeout);
+        checkTimeout = setTimeout(() => {
+            // Final check: only show fallback if both images still haven't loaded
+            if (!statsImgLoaded && !langsImgLoaded) {
+                // Both images failed, show fallback
+                if (statsContainer) statsContainer.style.display = "none";
+                loadStatsFallback();
+            }
+        }, STATS_IMAGE_TIMEOUT_MS);
+    }
+    
+    if (statsImg) {
+        statsImg.addEventListener("load", () => {
+            statsImgLoaded = true;
+        });
+        
+        statsImg.addEventListener("error", () => {
+            checkImageLoading();
+        });
+    }
+    
+    if (langsImg) {
+        langsImg.addEventListener("load", () => {
+            langsImgLoaded = true;
+        });
+        
+        langsImg.addEventListener("error", () => {
+            checkImageLoading();
+        });
+    }
+    
+    // Start verification
+    checkImageLoading();
 }
 
 /* --- TERMINAL --- */
