@@ -379,6 +379,7 @@ setTimeout(() => {
 
 /* --- CONFIG --- */
 const GH_USER = "Kramorant";
+const STATS_IMAGE_TIMEOUT_MS = 3000; // Wait time before showing fallback when images fail
 
 /* --- PERFIL + REPOS DESTACADOS + ACTIVIDAD --- */
 async function loadGitHubDashboard() {
@@ -441,12 +442,12 @@ async function loadStatsFallback() {
         const reposRes = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100`);
         const repos = await reposRes.json();
         
-        // Calcular estadísticas básicas
+        // Calculate basic statistics
         const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
         const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
         const publicRepos = profile.public_repos;
         
-        // Obtener lenguajes más usados
+        // Get most used languages
         const languages = {};
         repos.forEach(repo => {
             if (repo.language) {
@@ -458,7 +459,7 @@ async function loadStatsFallback() {
             .sort((a, b) => b[1] - a[1])
             .slice(0, 5);
         
-        // Crear contenido fallback
+        // Create fallback content
         const fallbackContainer = document.getElementById("stats-fallback");
         if (fallbackContainer) {
             fallbackContainer.innerHTML = `
@@ -520,16 +521,16 @@ function setupStatsImageHandlers() {
     let langsImgLoaded = false;
     let checkTimeout;
     
-    // Función para verificar si las imágenes fallaron
+    // Function to check if images failed to load
     function checkImageLoading() {
         clearTimeout(checkTimeout);
         checkTimeout = setTimeout(() => {
             if (!statsImgLoaded && !langsImgLoaded) {
-                // Ambas imágenes fallaron, mostrar fallback
+                // Both images failed, show fallback
                 if (statsContainer) statsContainer.style.display = "none";
                 loadStatsFallback();
             }
-        }, 3000); // Esperar 3 segundos antes de mostrar fallback
+        }, STATS_IMAGE_TIMEOUT_MS);
     }
     
     if (statsImg) {
@@ -552,7 +553,7 @@ function setupStatsImageHandlers() {
         });
     }
     
-    // Iniciar verificación
+    // Start verification
     checkImageLoading();
 }
 
